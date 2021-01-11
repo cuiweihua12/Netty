@@ -1,3 +1,5 @@
 .idea
 target
 netty.iml
+/target/
+/target
