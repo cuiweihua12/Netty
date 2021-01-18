@@ -3,6 +3,7 @@ package com.cwh.netty.simple;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
+import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import lombok.SneakyThrows;
 
@@ -32,9 +33,9 @@ public class NettyServer {
                     //设置保持活动连接
                     .childOption(ChannelOption.SO_KEEPALIVE,true)
                     //初始化通道
-                    .childHandler(new ChannelInitializer() {
+                    .childHandler(new ChannelInitializer<SocketChannel>() {
                         @Override
-                        protected void initChannel(Channel ch) throws Exception {
+                        protected void initChannel(SocketChannel ch) throws Exception {
                             ch.pipeline().addLast(new NettyServerHandler());
                         }
                     });

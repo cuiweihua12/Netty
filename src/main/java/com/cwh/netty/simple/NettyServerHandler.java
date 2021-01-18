@@ -9,11 +9,42 @@ import io.netty.util.CharsetUtil;
 /**
  * <p>Title: </p>
  * <p>Description: </p>
- *
  * @author cwh
  * @date 2021/1/11 14:26
  */
 public class NettyServerHandler  extends ChannelInboundHandlerAdapter {
+
+    /**
+     * 功能描述: 当通道注册时发生<br>
+     * @Param: [ctx]
+     * @Return: void
+     * @Date: 2021/1/12 10:34
+     **/
+    @Override
+    public void channelRegistered(ChannelHandlerContext ctx) throws Exception {
+        System.out.println("客户端注册成功：" + ctx.channel().remoteAddress());
+    }
+
+    /**
+     * 功能描述: 当通道取消注册时发生<br>
+     * @Param: [ctx]
+     * @Return: void
+     * @Date: 2021/1/12 10:34
+     **/
+    @Override
+    public void channelUnregistered(ChannelHandlerContext ctx) throws Exception {
+        System.out.println("客户端取消注册：" + ctx.channel().remoteAddress());
+    }
+
+    @Override
+    public void userEventTriggered(ChannelHandlerContext ctx, Object evt) throws Exception {
+        System.out.println("客户端有事件触发：" + ctx.channel().remoteAddress());
+    }
+
+    @Override
+    public void channelWritabilityChanged(ChannelHandlerContext ctx) throws Exception {
+        System.out.println("频道可写性已更改:" + ctx.channel().remoteAddress() );
+    }
 
     /**
      * 功能描述: 通道断开时触发<br>
@@ -46,7 +77,6 @@ public class NettyServerHandler  extends ChannelInboundHandlerAdapter {
      **/
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
-        System.out.println("ctx : "+ ctx);
         ByteBuf buf = (ByteBuf) msg;
         System.out.println("客户端地址：" + ctx.channel().remoteAddress());
         System.out.println("接受到客户端消息：" + buf.toString(CharsetUtil.UTF_8));
